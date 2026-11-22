@@ -59,9 +59,10 @@ layer.
 Roboto for Poppins, because google_fonts cannot fetch a typeface offline in a
 test; colour, spacing and layout are the app's own.
 
+Package id: `com.prishapharma.mr`.
+
 ## Before release
 
-- `applicationId` is still `com.example.mr_app` — Play Store will refuse it.
 - The bearer token sits in `SharedPreferences`; move it to the
   Keychain/Keystore (`flutter_secure_storage`).
 - Fonts are fetched at runtime by google_fonts. Bundle Poppins so a rep on a

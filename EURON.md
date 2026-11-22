@@ -1,6 +1,6 @@
 # mr_app — Prisha Pharma MR
 
-Stack: Dart/Flutter · Riverpod · go_router · Dio
+Stack: Dart/Flutter · Riverpod · go_router · Dio · `com.prishapharma.mr`
 
 ## Commands
 - `flutter pub get`
