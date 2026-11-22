@@ -1,6 +1,22 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--
+        INTERNET is declared here, not only in src/debug. The Flutter
+        template puts it in the debug manifest for hot reload, so a release
+        build that relied on that would ship unable to reach the API at all.
+    -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <!--
+        Attendance punches and visits are geo-stamped: the rep's position is
+        read on the device and stored with the row. Fine location is what the
+        feature needs; coarse is listed so the app still works where the user
+        grants only approximate location.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
     <application
-        android:label="mr_app"
+        android:label="Prisha Pharma MR"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

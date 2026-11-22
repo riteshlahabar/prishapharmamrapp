@@ -6,8 +6,10 @@
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Your location is recorded with each check-in, check-out and visit, so your reports show where the work happened.</string>
 	<key>CFBundleDisplayName</key>
-	<string>Mr App</string>
+	<string>Prisha Pharma MR</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>

@@ -1,297 +1,93 @@
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'constants.dart';
-import 'services/auth_service.dart';
+import 'package:go_router/go_router.dart';
+import 'package:material_ui/material_ui.dart';
 
-// ─── Auth provider ──────────────────────────────────────────────
-final authProvider = Provider<AuthService>((ref) => AuthService());
+import '../features/attendance/ui/home_screen.dart';
+import '../features/auth/state/auth_controller.dart';
+import '../features/auth/ui/login_screen.dart';
+import '../features/messages/ui/inbox_screen.dart';
+import '../features/profile/ui/profile_screen.dart';
+import '../features/shell/ui/app_shell.dart';
+import '../features/visits/ui/visit_form_screen.dart';
+import '../features/visits/ui/visits_screen.dart';
 
-final authStateProvider = FutureProvider<bool>((ref) async {
-  final prefs = await SharedPreferences.getInstance();
-  return prefs.getString(AppConstants.tokenKey) != null;
+final _rootKey = GlobalKey<NavigatorState>();
+
+/// Routes, with one redirect: no token means login, and a token means
+/// anywhere but login.
+///
+/// The redirect reads a synchronous provider rather than hitting disk, so it
+/// cannot flicker. The token is loaded once in `main()` before `runApp`.
+final routerProvider = Provider<GoRouter>((ref) {
+  return GoRouter(
+    navigatorKey: _rootKey,
+    initialLocation: '/',
+    // Re-runs the redirect whenever sign-in state changes, so signing out
+    // from the profile tab moves the whole app to login by itself.
+    refreshListenable: _AuthListenable(ref),
+    redirect: (context, state) {
+      final signedIn = ref.read(isSignedInProvider);
+      final atLogin = state.matchedLocation == '/login';
+
+      if (!signedIn) return atLogin ? null : '/login';
+      if (atLogin) return '/';
+
+      return null;
+    },
+    routes: [
+      GoRoute(
+        path: '/login',
+        builder: (context, state) => const LoginScreen(),
+      ),
+      // One branch per tab, each keeping its own history.
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, navigationShell) =>
+            AppShell(navigationShell: navigationShell),
+        branches: [
+          StatefulShellBranch(
+            routes: [
+              GoRoute(path: '/', builder: (context, state) => const HomeScreen()),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/visits',
+                builder: (context, state) => const VisitsScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/messages',
+                builder: (context, state) => const InboxScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/profile',
+                builder: (context, state) => const ProfileScreen(),
+              ),
+            ],
+          ),
+        ],
+      ),
+      // Outside the shell: a full-screen form over the tabs.
+      GoRoute(
+        parentNavigatorKey: _rootKey,
+        path: '/visits/new',
+        builder: (context, state) => const VisitFormScreen(),
+      ),
+    ],
+  );
 });
 
-// ─── Placeholder screens ────────────────────────────────────────
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(body: Center(child: Text('Login Screen')));
-  }
-}
-
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 0,
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.dashboard), label: 'Dashboard'),
-          BottomNavigationBarItem(icon: Icon(Icons.people), label: 'Customers'),
-          BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Orders'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-        ],
-      ),
-      body: Center(child: Text('Home Screen')),
-    );
-  }
-}
-
-class DashboardScreen extends StatelessWidget {
-  const DashboardScreen({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(body: Center(child: Text('Dashboard')));
-  }
-}
-
-class CustomerListScreen extends StatelessWidget {
-  const CustomerListScreen({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(body: Center(child: Text('Customer List')));
-  }
-}
-
-class CustomerDetailScreen extends StatelessWidget {
-  final String id;
-  const CustomerDetailScreen({super.key, required this.id});
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: Text('Customer: $id')));
-  }
-}
-
-class OrderListScreen extends StatelessWidget {
-  const OrderListScreen({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(body: Center(child: Text('Order List')));
-  }
-}
-
-class NewOrderScreen extends StatelessWidget {
-  const NewOrderScreen({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(body: Center(child: Text('New Order')));
-  }
-}
-
-class OrderDetailScreen extends StatelessWidget {
-  final String id;
-  const OrderDetailScreen({super.key, required this.id});
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: Text('Order: $id')));
-  }
-}
-
-class ProductListScreen extends StatelessWidget {
-  const ProductListScreen({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(body: Center(child: Text('Product List')));
-  }
-}
-
-class ProductDetailScreen extends StatelessWidget {
-  final String id;
-  const ProductDetailScreen({super.key, required this.id});
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: Text('Product: $id')));
-  }
-}
-
-class ReportsScreen extends StatelessWidget {
-  const ReportsScreen({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(body: Center(child: Text('Reports')));
-  }
-}
-
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(body: Center(child: Text('Profile')));
-  }
-}
-
-// ─── GoRouter ───────────────────────────────────────────────────
-final appRouter = GoRouter(
-  redirect: (context, state) async {
-    final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString(AppConstants.tokenKey);
-    final isAuthenticated = token != null;
-    final goingToLogin = state.uri.toString() == '/login';
-
-    if (!isAuthenticated && !goingToLogin) {
-      return '/login';
-    }
-    if (isAuthenticated && goingToLogin) {
-      return '/home';
-    }
-    return null;
-  },
-  routes: <RouteBase>[
-    GoRoute(
-      path: '/login',
-      builder: (context, state) => const LoginScreen(),
-    ),
-    ShellRoute(
-      builder: (context, state, child) {
-        return HomeScreenWithNav(child: child);
-      },
-      routes: [
-        GoRoute(
-          path: '/home',
-          pageBuilder: (context, state) => const NoTransitionPage(
-            child: DashboardScreen(),
-          ),
-          routes: [
-            GoRoute(
-              path: 'customers',
-              pageBuilder: (context, state) => const NoTransitionPage(
-                child: CustomerListScreen(),
-              ),
-              routes: [
-                GoRoute(
-                  path: ':id',
-                  parentBuilder: (context, child) => child,
-                  pageBuilder: (context, state) => CustomTransitionPage(
-                    child: CustomerDetailScreen(id: state.pathParameters['id']!),
-                    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                      return FadeTransition(opacity: animation, child: child);
-                    },
-                  ),
-                ),
-              ],
-            ),
-            GoRoute(
-              path: 'orders',
-              pageBuilder: (context, state) => const NoTransitionPage(
-                child: OrderListScreen(),
-              ),
-              routes: [
-                GoRoute(
-                  path: 'new',
-                  parentBuilder: (context, child) => child,
-                  pageBuilder: (context, state) => CustomTransitionPage(
-                    child: const NewOrderScreen(),
-                    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                      return FadeTransition(opacity: animation, child: child);
-                    },
-                  ),
-                ),
-                GoRoute(
-                  path: ':id',
-                  parentBuilder: (context, child) => child,
-                  pageBuilder: (context, state) => CustomTransitionPage(
-                    child: OrderDetailScreen(id: state.pathParameters['id']!),
-                    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                      return FadeTransition(opacity: animation, child: child);
-                    },
-                  ),
-                ),
-              ],
-            ),
-            GoRoute(
-              path: 'products',
-              pageBuilder: (context, state) => const NoTransitionPage(
-                child: ProductListScreen(),
-              ),
-              routes: [
-                GoRoute(
-                  path: ':id',
-                  parentBuilder: (context, child) => child,
-                  pageBuilder: (context, state) => CustomTransitionPage(
-                    child: ProductDetailScreen(id: state.pathParameters['id']!),
-                    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                      return FadeTransition(opacity: animation, child: child);
-                    },
-                  ),
-                ),
-              ],
-            ),
-            GoRoute(
-              path: 'reports',
-              pageBuilder: (context, state) => const NoTransitionPage(
-                child: ReportsScreen(),
-              ),
-            ),
-            GoRoute(
-              path: 'profile',
-              pageBuilder: (context, state) => const NoTransitionPage(
-                child: ProfileScreen(),
-              ),
-            ),
-          ],
-        ),
-      ],
-    ),
-  ],
-);
-
-// ─── Shell wrapper with bottom nav ──────────────────────────────
-class HomeScreenWithNav extends ConsumerWidget {
-  final Widget child;
-  const HomeScreenWithNav({super.key, required this.child});
-
-  static const _routes = [
-    '/home',
-    '/home/customers',
-    '/home/orders',
-    '/home/profile',
-  ];
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final currentPath = GoRouterState.of(context).uri.toString();
-    int currentIndex = 0;
-    for (int i = 0; i < _routes.length; i++) {
-      if (currentPath.startsWith(_routes[i])) {
-        currentIndex = i;
-        break;
-      }
-    }
-
-    return Scaffold(
-      body: child,
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentIndex,
-        onTap: (index) {
-          context.go(_routes[index]);
-        },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard_outlined),
-            activeIcon: Icon(Icons.dashboard),
-            label: 'Dashboard',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.people_outline),
-            activeIcon: Icon(Icons.people),
-            label: 'Customers',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart_outlined),
-            activeIcon: Icon(Icons.shopping_cart),
-            label: 'Orders',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
-            activeIcon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-      ),
-    );
+/// Bridges Riverpod to GoRouter's `refreshListenable`.
+class _AuthListenable extends ChangeNotifier {
+  _AuthListenable(Ref ref) {
+    ref.listen(isSignedInProvider, (_, _) => notifyListeners());
   }
 }

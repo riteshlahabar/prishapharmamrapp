@@ -1,142 +1,77 @@
-import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:material_ui/material_ui.dart';
 
+/// The Medilab ProKit look, rebuilt on Material 3.
+///
+/// Colours are lifted from the kit's own `MLColors.dart` (`design/`), so the
+/// app matches the reference without carrying its code: ProKit is built on
+/// nb_utils and MobX, and we use Riverpod. We harvest the design, not the
+/// state layer.
 class AppTheme {
-  // Core brand colors - Medilab ProKit medical style
-  static const Color primaryColor = Color(0xFF00897B);       // Teal
-  static const Color secondaryColor = Color(0xFF26A69A);     // Light teal
-  static const Color scaffoldBackground = Color(0xFFF5F5F5); // Light grey
-  static const Color cardColor = Colors.white;
-  static const Color errorColor = Color(0xFFE53935);
+  AppTheme._();
 
-  static ThemeData get lightTheme {
-    return ThemeData(
+  /// `appColorPrimary` in the kit.
+  static const Color primary = Color(0xFF1157FA);
+  static const Color primaryLight = Color(0xFFF9FAFF);
+  static const Color textPrimary = Color(0xFF212121);
+  static const Color textSecondary = Color(0xFF5A5C5E);
+  static const Color shadow = Color(0x95E9EBF0);
+  static const Color scaffold = Color(0xFFF5F6FA);
+
+  static const Color success = Color(0xFF17A673);
+  static const Color warning = Color(0xFFF2A33C);
+  static const Color danger = Color(0xFFE2443B);
+
+  static ThemeData get light {
+    final base = ThemeData(
       useMaterial3: true,
-      primaryColor: primaryColor,
-      scaffoldBackgroundColor: scaffoldBackground,
-      colorScheme: const ColorScheme.light(
-        primary: primaryColor,
-        secondary: secondaryColor,
-        surface: cardColor,
-        error: errorColor,
-        onPrimary: Colors.white,
-        onSecondary: Colors.white,
-        onSurface: Color(0xFF212121),
-        onError: Colors.white,
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: primary,
+        primary: primary,
+        error: danger,
       ),
-      textTheme: GoogleFonts.poppinsTextTheme().copyWith(
-        headlineLarge: GoogleFonts.poppins(
-          fontSize: 28,
-          fontWeight: FontWeight.bold,
-          color: const Color(0xFF212121),
-        ),
-        headlineMedium: GoogleFonts.poppins(
-          fontSize: 22,
-          fontWeight: FontWeight.w600,
-          color: const Color(0xFF212121),
-        ),
-        headlineSmall: GoogleFonts.poppins(
-          fontSize: 18,
-          fontWeight: FontWeight.w600,
-          color: const Color(0xFF212121),
-        ),
-        titleLarge: GoogleFonts.poppins(
-          fontSize: 18,
-          fontWeight: FontWeight.w500,
-          color: const Color(0xFF212121),
-        ),
-        titleMedium: GoogleFonts.poppins(
-          fontSize: 16,
-          fontWeight: FontWeight.w500,
-          color: const Color(0xFF424242),
-        ),
-        titleSmall: GoogleFonts.poppins(
-          fontSize: 14,
-          fontWeight: FontWeight.w500,
-          color: const Color(0xFF616161),
-        ),
-        bodyLarge: GoogleFonts.roboto(
-          fontSize: 16,
-          fontWeight: FontWeight.normal,
-          color: const Color(0xFF424242),
-        ),
-        bodyMedium: GoogleFonts.roboto(
-          fontSize: 14,
-          fontWeight: FontWeight.normal,
-          color: const Color(0xFF616161),
-        ),
-        bodySmall: GoogleFonts.roboto(
-          fontSize: 12,
-          fontWeight: FontWeight.normal,
-          color: const Color(0xFF757575),
-        ),
-        labelLarge: GoogleFonts.poppins(
-          fontSize: 14,
-          fontWeight: FontWeight.w500,
-          color: Colors.white,
-        ),
-        labelSmall: GoogleFonts.poppins(
-          fontSize: 11,
-          fontWeight: FontWeight.w500,
-          color: const Color(0xFF757575),
-        ),
+      scaffoldBackgroundColor: scaffold,
+    );
+
+    return base.copyWith(
+      textTheme: GoogleFonts.poppinsTextTheme(base.textTheme).apply(
+        bodyColor: textPrimary,
+        displayColor: textPrimary,
       ),
       appBarTheme: const AppBarTheme(
-        backgroundColor: primaryColor,
-        foregroundColor: Colors.white,
+        backgroundColor: Colors.white,
+        foregroundColor: textPrimary,
         elevation: 0,
-        centerTitle: true,
-        titleTextStyle: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.w600,
-          color: Colors.white,
-        ),
+        scrolledUnderElevation: 0.5,
+        centerTitle: false,
       ),
       cardTheme: CardThemeData(
-        color: cardColor,
-        elevation: 2,
+        color: Colors.white,
+        elevation: 0,
+        margin: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(16),
+          side: const BorderSide(color: Color(0xFFEDEFF5)),
         ),
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: Colors.white,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Color(0xFFBDBDBD)),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Color(0xFFBDBDBD)),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: primaryColor, width: 2),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: errorColor),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: errorColor, width: 2),
-        ),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-        labelStyle: GoogleFonts.roboto(
-          fontSize: 14,
-          color: const Color(0xFF757575),
-        ),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        border: _border(const Color(0xFFE2E6F0)),
+        enabledBorder: _border(const Color(0xFFE2E6F0)),
+        focusedBorder: _border(primary, width: 1.6),
+        errorBorder: _border(danger),
+        focusedErrorBorder: _border(danger, width: 1.6),
       ),
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: primaryColor,
+      filledButtonTheme: FilledButtonThemeData(
+        style: FilledButton.styleFrom(
+          backgroundColor: primary,
           foregroundColor: Colors.white,
-          elevation: 2,
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+          minimumSize: const Size.fromHeight(52),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(14),
           ),
           textStyle: GoogleFonts.poppins(
             fontSize: 15,
@@ -146,11 +81,11 @@ class AppTheme {
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-          foregroundColor: primaryColor,
-          side: const BorderSide(color: primaryColor, width: 1.5),
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+          foregroundColor: primary,
+          minimumSize: const Size.fromHeight(52),
+          side: const BorderSide(color: primary, width: 1.4),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(14),
           ),
           textStyle: GoogleFonts.poppins(
             fontSize: 15,
@@ -158,31 +93,39 @@ class AppTheme {
           ),
         ),
       ),
-      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-        backgroundColor: Colors.white,
-        selectedItemColor: primaryColor,
-        unselectedItemColor: Color(0xFFBDBDBD),
-        type: BottomNavigationBarType.fixed,
-        elevation: 8,
-        selectedLabelStyle: TextStyle(
-          fontSize: 12,
-          fontWeight: FontWeight.w600,
-        ),
-        unselectedLabelStyle: TextStyle(
-          fontSize: 12,
-          fontWeight: FontWeight.normal,
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: primary,
+        foregroundColor: Colors.white,
+        elevation: 2,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
         ),
       ),
-      floatingActionButtonTheme: const FloatingActionButtonThemeData(
-        backgroundColor: primaryColor,
-        foregroundColor: Colors.white,
-        elevation: 4,
+      navigationBarTheme: NavigationBarThemeData(
+        backgroundColor: Colors.white,
+        indicatorColor: primary.withValues(alpha: 0.12),
+        elevation: 3,
+        labelTextStyle: WidgetStateProperty.all(
+          GoogleFonts.poppins(fontSize: 12, fontWeight: FontWeight.w500),
+        ),
       ),
       dividerTheme: const DividerThemeData(
-        color: Color(0xFFE0E0E0),
+        color: Color(0xFFEDEFF5),
         thickness: 1,
         space: 1,
       ),
+      snackBarTheme: SnackBarThemeData(
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+      ),
     );
   }
+
+  static OutlineInputBorder _border(Color color, {double width = 1}) =>
+      OutlineInputBorder(
+        borderRadius: BorderRadius.circular(14),
+        borderSide: BorderSide(color: color, width: width),
+      );
 }

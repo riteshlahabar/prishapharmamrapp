@@ -1,0 +1,32 @@
+{
+  "success": true,
+  "message": "Persons loaded.",
+  "data": [
+    {
+      "id": 1,
+      "name": "Dr Phase3",
+      "type": "doctor",
+      "type_label": "Doctor",
+      "mobile": "9300000011",
+      "email": null,
+      "address": null,
+      "city": null,
+      "specialization": null,
+      "is_active": true,
+      "region": {
+        "id": 1,
+        "name": "Phase3 Region",
+        "code": "P3R"
+      }
+    }
+  ],
+  "meta": {
+    "current_page": 1,
+    "last_page": 1,
+    "per_page": 20,
+    "total": 1,
+    "from": 1,
+    "to": 1,
+    "has_more": false
+  }
+}

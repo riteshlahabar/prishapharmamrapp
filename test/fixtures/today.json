@@ -1,0 +1,14 @@
+{
+  "success": true,
+  "message": "Not checked in yet.",
+  "data": {
+    "id": null,
+    "date": "2026-11-22",
+    "check_in_at": null,
+    "check_out_at": null,
+    "worked_minutes": null,
+    "status": "Absent",
+    "can_check_in": true,
+    "can_check_out": false
+  }
+}

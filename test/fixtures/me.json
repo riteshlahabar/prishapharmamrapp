@@ -1,0 +1,22 @@
+{
+  "success": true,
+  "message": "Profile loaded.",
+  "data": {
+    "id": 3,
+    "name": "P3 MR Two",
+    "email": "p3.mr2@x.local",
+    "mobile": "9300000003",
+    "role": "mr",
+    "role_label": "Medical Representative",
+    "is_active": true,
+    "region_id": 1,
+    "regions": [
+      {
+        "id": 1,
+        "name": "Phase3 Region",
+        "code": "P3R"
+      }
+    ],
+    "permissions": []
+  }
+}

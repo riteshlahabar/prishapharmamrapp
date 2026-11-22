@@ -1,0 +1,7 @@
+{
+  "success": true,
+  "message": "Unread count loaded.",
+  "data": {
+    "unread": 0
+  }
+}

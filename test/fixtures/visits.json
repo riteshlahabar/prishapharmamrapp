@@ -1,0 +1,372 @@
+{
+  "success": true,
+  "message": "Visits loaded.",
+  "data": [
+    {
+      "id": 53,
+      "visit_date": "2026-11-22",
+      "purpose": "product_detailing",
+      "purpose_label": "Product detailing",
+      "in_time": null,
+      "out_time": null,
+      "duration_minutes": null,
+      "latitude": null,
+      "longitude": null,
+      "location_fetched_at": null,
+      "notes": "phase6 smoke",
+      "recorded_at": "2026-11-22T06:57:23+00:00",
+      "person": {
+        "id": 1,
+        "name": "Dr Phase3",
+        "type": "doctor",
+        "mobile": "9300000011",
+        "city": null
+      }
+    },
+    {
+      "id": 52,
+      "visit_date": "2026-11-22",
+      "purpose": "product_detailing",
+      "purpose_label": "Product detailing",
+      "in_time": null,
+      "out_time": null,
+      "duration_minutes": null,
+      "latitude": "19.1000000",
+      "longitude": "72.8000000",
+      "location_fetched_at": "2026-11-22T06:57:23+00:00",
+      "notes": "phase6 smoke",
+      "recorded_at": "2026-11-22T06:57:23+00:00",
+      "person": {
+        "id": 1,
+        "name": "Dr Phase3",
+        "type": "doctor",
+        "mobile": "9300000011",
+        "city": null
+      }
+    },
+    {
+      "id": 51,
+      "visit_date": "2026-11-22",
+      "purpose": "product_detailing",
+      "purpose_label": "Product detailing",
+      "in_time": null,
+      "out_time": null,
+      "duration_minutes": null,
+      "latitude": null,
+      "longitude": null,
+      "location_fetched_at": null,
+      "notes": "phase6 smoke",
+      "recorded_at": "2026-11-22T06:53:11+00:00",
+      "person": {
+        "id": 1,
+        "name": "Dr Phase3",
+        "type": "doctor",
+        "mobile": "9300000011",
+        "city": null
+      }
+    },
+    {
+      "id": 50,
+      "visit_date": "2026-11-22",
+      "purpose": "product_detailing",
+      "purpose_label": "Product detailing",
+      "in_time": null,
+      "out_time": null,
+      "duration_minutes": null,
+      "latitude": "19.1000000",
+      "longitude": "72.8000000",
+      "location_fetched_at": "2026-11-22T06:53:11+00:00",
+      "notes": "phase6 smoke",
+      "recorded_at": "2026-11-22T06:53:11+00:00",
+      "person": {
+        "id": 1,
+        "name": "Dr Phase3",
+        "type": "doctor",
+        "mobile": "9300000011",
+        "city": null
+      }
+    },
+    {
+      "id": 49,
+      "visit_date": "2026-11-22",
+      "purpose": "product_detailing",
+      "purpose_label": "Product detailing",
+      "in_time": null,
+      "out_time": null,
+      "duration_minutes": null,
+      "latitude": null,
+      "longitude": null,
+      "location_fetched_at": null,
+      "notes": "phase6 smoke",
+      "recorded_at": "2026-11-22T06:36:33+00:00",
+      "person": {
+        "id": 1,
+        "name": "Dr Phase3",
+        "type": "doctor",
+        "mobile": "9300000011",
+        "city": null
+      }
+    },
+    {
+      "id": 48,
+      "visit_date": "2026-11-22",
+      "purpose": "product_detailing",
+      "purpose_label": "Product detailing",
+      "in_time": null,
+      "out_time": null,
+      "duration_minutes": null,
+      "latitude": "19.1000000",
+      "longitude": "72.8000000",
+      "location_fetched_at": "2026-11-22T06:36:33+00:00",
+      "notes": "phase6 smoke",
+      "recorded_at": "2026-11-22T06:36:33+00:00",
+      "person": {
+        "id": 1,
+        "name": "Dr Phase3",
+        "type": "doctor",
+        "mobile": "9300000011",
+        "city": null
+      }
+    },
+    {
+      "id": 47,
+      "visit_date": "2026-11-22",
+      "purpose": "product_detailing",
+      "purpose_label": "Product detailing",
+      "in_time": null,
+      "out_time": null,
+      "duration_minutes": null,
+      "latitude": null,
+      "longitude": null,
+      "location_fetched_at": null,
+      "notes": "phase6 smoke",
+      "recorded_at": "2026-11-22T06:34:42+00:00",
+      "person": {
+        "id": 1,
+        "name": "Dr Phase3",
+        "type": "doctor",
+        "mobile": "9300000011",
+        "city": null
+      }
+    },
+    {
+      "id": 46,
+      "visit_date": "2026-11-22",
+      "purpose": "product_detailing",
+      "purpose_label": "Product detailing",
+      "in_time": null,
+      "out_time": null,
+      "duration_minutes": null,
+      "latitude": "19.1000000",
+      "longitude": "72.8000000",
+      "location_fetched_at": "2026-11-22T06:34:42+00:00",
+      "notes": "phase6 smoke",
+      "recorded_at": "2026-11-22T06:34:42+00:00",
+      "person": {
+        "id": 1,
+        "name": "Dr Phase3",
+        "type": "doctor",
+        "mobile": "9300000011",
+        "city": null
+      }
+    },
+    {
+      "id": 45,
+      "visit_date": "2026-11-22",
+      "purpose": "product_detailing",
+      "purpose_label": "Product detailing",
+      "in_time": null,
+      "out_time": null,
+      "duration_minutes": null,
+      "latitude": null,
+      "longitude": null,
+      "location_fetched_at": null,
+      "notes": "phase6 smoke",
+      "recorded_at": "2026-11-22T06:34:22+00:00",
+      "person": {
+        "id": 1,
+        "name": "Dr Phase3",
+        "type": "doctor",
+        "mobile": "9300000011",
+        "city": null
+      }
+    },
+    {
+      "id": 44,
+      "visit_date": "2026-11-22",
+      "purpose": "product_detailing",
+      "purpose_label": "Product detailing",
+      "in_time": null,
+      "out_time": null,
+      "duration_minutes": null,
+      "latitude": "19.1000000",
+      "longitude": "72.8000000",
+      "location_fetched_at": "2026-11-22T06:34:22+00:00",
+      "notes": "phase6 smoke",
+      "recorded_at": "2026-11-22T06:34:22+00:00",
+      "person": {
+        "id": 1,
+        "name": "Dr Phase3",
+        "type": "doctor",
+        "mobile": "9300000011",
+        "city": null
+      }
+    },
+    {
+      "id": 43,
+      "visit_date": "2026-11-22",
+      "purpose": "product_detailing",
+      "purpose_label": "Product detailing",
+      "in_time": null,
+      "out_time": null,
+      "duration_minutes": null,
+      "latitude": null,
+      "longitude": null,
+      "location_fetched_at": null,
+      "notes": null,
+      "recorded_at": "2026-11-22T06:34:22+00:00",
+      "person": {
+        "id": 1,
+        "name": "Dr Phase3",
+        "type": "doctor",
+        "mobile": "9300000011",
+        "city": null
+      }
+    },
+    {
+      "id": 42,
+      "visit_date": "2026-11-22",
+      "purpose": "product_detailing",
+      "purpose_label": "Product detailing",
+      "in_time": null,
+      "out_time": null,
+      "duration_minutes": null,
+      "latitude": null,
+      "longitude": null,
+      "location_fetched_at": null,
+      "notes": "phase6 smoke",
+      "recorded_at": "2026-11-22T06:23:51+00:00",
+      "person": {
+        "id": 1,
+        "name": "Dr Phase3",
+        "type": "doctor",
+        "mobile": "9300000011",
+        "city": null
+      }
+    },
+    {
+      "id": 41,
+      "visit_date": "2026-11-22",
+      "purpose": "product_detailing",
+      "purpose_label": "Product detailing",
+      "in_time": null,
+      "out_time": null,
+      "duration_minutes": null,
+      "latitude": "19.1000000",
+      "longitude": "72.8000000",
+      "location_fetched_at": "2026-11-22T06:23:51+00:00",
+      "notes": "phase6 smoke",
+      "recorded_at": "2026-11-22T06:23:51+00:00",
+      "person": {
+        "id": 1,
+        "name": "Dr Phase3",
+        "type": "doctor",
+        "mobile": "9300000011",
+        "city": null
+      }
+    },
+    {
+      "id": 40,
+      "visit_date": "2026-11-22",
+      "purpose": "product_detailing",
+      "purpose_label": "Product detailing",
+      "in_time": null,
+      "out_time": null,
+      "duration_minutes": null,
+      "latitude": null,
+      "longitude": null,
+      "location_fetched_at": null,
+      "notes": "phase6 smoke",
+      "recorded_at": "2026-11-22T06:23:41+00:00",
+      "person": {
+        "id": 1,
+        "name": "Dr Phase3",
+        "type": "doctor",
+        "mobile": "9300000011",
+        "city": null
+      }
+    },
+    {
+      "id": 39,
+      "visit_date": "2026-11-22",
+      "purpose": "product_detailing",
+      "purpose_label": "Product detailing",
+      "in_time": null,
+      "out_time": null,
+      "duration_minutes": null,
+      "latitude": "19.1000000",
+      "longitude": "72.8000000",
+      "location_fetched_at": "2026-11-22T06:23:41+00:00",
+      "notes": "phase6 smoke",
+      "recorded_at": "2026-11-22T06:23:41+00:00",
+      "person": {
+        "id": 1,
+        "name": "Dr Phase3",
+        "type": "doctor",
+        "mobile": "9300000011",
+        "city": null
+      }
+    },
+    {
+      "id": 3,
+      "visit_date": "2026-11-21",
+      "purpose": "courtesy",
+      "purpose_label": "Courtesy call",
+      "in_time": null,
+      "out_time": null,
+      "duration_minutes": null,
+      "latitude": null,
+      "longitude": null,
+      "location_fetched_at": null,
+      "notes": "other rep 2",
+      "recorded_at": "2026-11-21T20:15:08+00:00",
+      "person": {
+        "id": 1,
+        "name": "Dr Phase3",
+        "type": "doctor",
+        "mobile": "9300000011",
+        "city": null
+      }
+    },
+    {
+      "id": 2,
+      "visit_date": "2026-11-21",
+      "purpose": "courtesy",
+      "purpose_label": "Courtesy call",
+      "in_time": null,
+      "out_time": null,
+      "duration_minutes": null,
+      "latitude": null,
+      "longitude": null,
+      "location_fetched_at": null,
+      "notes": "other rep 1",
+      "recorded_at": "2026-11-21T20:15:08+00:00",
+      "person": {
+        "id": 1,
+        "name": "Dr Phase3",
+        "type": "doctor",
+        "mobile": "9300000011",
+        "city": null
+      }
+    }
+  ],
+  "meta": {
+    "current_page": 1,
+    "last_page": 1,
+    "per_page": 20,
+    "total": 17,
+    "from": 1,
+    "to": 17,
+    "has_more": false
+  }
+}
