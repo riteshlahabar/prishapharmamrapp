@@ -5,6 +5,7 @@ import 'package:material_ui/material_ui.dart';
 
 import '../../../core/app_theme.dart';
 import '../../../core/widgets/app_feedback.dart';
+import '../../../core/widgets/brand.dart';
 import '../domain/visit.dart';
 import '../state/visits_controller.dart';
 
@@ -16,7 +17,10 @@ class VisitsScreen extends ConsumerWidget {
     final visits = ref.watch(visitsControllerProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('My visits')),
+      appBar: const BrandAppBar(
+        title: 'My visits',
+        subtitle: 'Everything you have filed',
+      ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => context.push('/visits/new'),
         icon: const Icon(Icons.add),
@@ -79,23 +83,40 @@ class _VisitTile extends StatelessWidget {
           children: [
             Row(
               children: [
+                const IconPad(
+                  icon: Icons.person_outline,
+                  colour: AppTheme.tileTeal,
+                  size: 36,
+                ),
+                const SizedBox(width: 10),
                 Expanded(
-                  child: Text(
-                    visit.personName ?? 'Unknown person',
-                    style: Theme.of(context).textTheme.titleMedium,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        visit.personName ?? 'Unknown client',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      Text(
+                        visit.purposeLabel,
+                        style: const TextStyle(
+                          color: AppTheme.teal,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                if (visit.isGeotagged)
-                  const Icon(Icons.place, size: 16, color: AppTheme.success)
-                else
-                  const Icon(Icons.location_off_outlined,
-                      size: 16, color: AppTheme.textSecondary),
+                // Whether the punch carried coordinates is the one thing the
+                // office checks, so it is a chip rather than a bare icon.
+                StatusChip(
+                  label: visit.isGeotagged ? 'Geotagged' : 'No location',
+                  colour: visit.isGeotagged
+                      ? AppTheme.success
+                      : AppTheme.textSecondary,
+                ),
               ],
-            ),
-            const SizedBox(height: 4),
-            Text(
-              visit.purposeLabel,
-              style: const TextStyle(color: AppTheme.primary, fontSize: 12),
             ),
             const SizedBox(height: 8),
             // A Wrap, not a Row: a long date beside a full in–out range

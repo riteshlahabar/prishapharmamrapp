@@ -51,9 +51,22 @@ Each feature is `domain/` (models), `data/` (repository), `state/` (Riverpod),
 ## Design
 
 `design/medilab_prokit/` is the Medilab ProKit reference, kept for its look
-only: palette (`#1157FA`), spacing, card shapes. It is built on nb_utils and
-MobX and is excluded from analysis — we harvest the design, not the state
-layer.
+only: spacing, card shapes. It is built on nb_utils and MobX and is excluded
+from analysis — we harvest the design, not the state layer.
+
+Colours are Prisha's: the logo's teal `#00797C` and green `#6EAE40`, in
+`lib/core/app_theme.dart`, used pale on large surfaces and full strength on
+icons, figures and accents. `lib/core/widgets/brand.dart` holds the four
+pieces every screen is built from — `BrandAppBar`, `BrandHeader`,
+`StatCard`, `IconPad`/`StatusChip`.
+
+The splash is `lib/features/splash/`, held by `splashDoneProvider` until the
+profile re-check has had a moment; the router keeps every route behind that
+flag so a cold start never flashes login at a signed-in rep. The Android
+window before the first Flutter frame is `res/drawable*/launch_background`
+with the same logo on the same pale ground. Launcher icons are the mark on
+white in `res/mipmap-*` and `ios/.../AppIcon.appiconset`; all of it is
+generated from `assets/images/`, so regenerate by hand if the artwork moves.
 
 `test/golden/*.png` are rendered screens for human review. They substitute
 Roboto for Poppins, because google_fonts cannot fetch a typeface offline in a

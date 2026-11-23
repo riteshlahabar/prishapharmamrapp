@@ -53,7 +53,8 @@ void main() {
   testWidgets('a fresh day offers check in and nothing else', (tester) async {
     await pumpHome(tester, fresh);
 
-    expect(find.text('Asha Patel'), findsOneWidget);
+    // The header greets by first name; the full name lives on Profile.
+    expect(find.text('Hello, Asha'), findsOneWidget);
     expect(find.text('Pune West'), findsOneWidget);
     expect(find.text('Check in'), findsWidgets);
     // The check-out button must not exist yet: the server said so, and the
@@ -95,6 +96,6 @@ void main() {
     expect(find.textContaining("That's your day recorded"), findsOneWidget);
     expect(find.byType(FilledButton), findsNothing);
     // 505 minutes reads as hours and minutes, not as a raw count.
-    expect(find.text('Worked 8h 25m'), findsOneWidget);
+    expect(find.text('8h 25m'), findsOneWidget);
   });
 }

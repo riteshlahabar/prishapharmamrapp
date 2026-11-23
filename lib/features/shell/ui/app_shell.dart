@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
+import '../../../core/app_theme.dart';
 import '../../messages/state/messages_controller.dart';
 
 /// The bottom-nav frame the four main screens live in.
@@ -16,44 +17,51 @@ class AppShell extends ConsumerWidget {
 
     return Scaffold(
       body: navigationShell,
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: navigationShell.currentIndex,
-        onDestinationSelected: (index) => navigationShell.goBranch(
-          index,
-          // Tapping the current tab again pops it back to its first screen,
-          // which is what a second tap is for.
-          initialLocation: index == navigationShell.currentIndex,
+      // A hairline over the bar: the theme gives it a white ground, and
+      // without this it melts into a white screen behind it.
+      bottomNavigationBar: DecoratedBox(
+        decoration: const BoxDecoration(
+          border: Border(top: BorderSide(color: AppTheme.line)),
         ),
-        destinations: [
-          const NavigationDestination(
-            icon: Icon(Icons.home_outlined),
-            selectedIcon: Icon(Icons.home),
-            label: 'Today',
+        child: NavigationBar(
+          selectedIndex: navigationShell.currentIndex,
+          onDestinationSelected: (index) => navigationShell.goBranch(
+            index,
+            // Tapping the current tab again pops it back to its first screen,
+            // which is what a second tap is for.
+            initialLocation: index == navigationShell.currentIndex,
           ),
-          const NavigationDestination(
-            icon: Icon(Icons.map_outlined),
-            selectedIcon: Icon(Icons.map),
-            label: 'Visits',
-          ),
-          NavigationDestination(
-            icon: Badge.count(
-              count: unread,
-              isLabelVisible: unread > 0,
-              child: const Icon(Icons.mail_outline),
+          destinations: [
+            const NavigationDestination(
+              icon: Icon(Icons.home_outlined),
+              selectedIcon: Icon(Icons.home),
+              label: 'Today',
             ),
-            selectedIcon: Badge.count(
-              count: unread,
-              isLabelVisible: unread > 0,
-              child: const Icon(Icons.mail),
+            const NavigationDestination(
+              icon: Icon(Icons.map_outlined),
+              selectedIcon: Icon(Icons.map),
+              label: 'Visits',
             ),
-            label: 'Messages',
-          ),
-          const NavigationDestination(
-            icon: Icon(Icons.person_outline),
-            selectedIcon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
+            NavigationDestination(
+              icon: Badge.count(
+                count: unread,
+                isLabelVisible: unread > 0,
+                child: const Icon(Icons.mail_outline),
+              ),
+              selectedIcon: Badge.count(
+                count: unread,
+                isLabelVisible: unread > 0,
+                child: const Icon(Icons.mail),
+              ),
+              label: 'Messages',
+            ),
+            const NavigationDestination(
+              icon: Icon(Icons.person_outline),
+              selectedIcon: Icon(Icons.person),
+              label: 'Profile',
+            ),
+          ],
+        ),
       ),
     );
   }

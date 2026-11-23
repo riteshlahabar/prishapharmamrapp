@@ -31,30 +31,40 @@ class AppUser {
     return (parts.first[0] + parts.last[0]).toUpperCase();
   }
 
-  String get regionLabel =>
-      regions.isEmpty ? 'No region assigned' : regions.map((r) => r.name).join(', ');
+  /// What the home screen greets them by. A full name in a greeting reads
+  /// like a form letter.
+  String get firstName {
+    final first = name.trim().split(RegExp(r'\s+')).first;
+
+    return first.isEmpty ? 'there' : first;
+  }
+
+  String get regionLabel => regions.isEmpty
+      ? 'No region assigned'
+      : regions.map((r) => r.name).join(', ');
 
   factory AppUser.fromJson(Map<String, dynamic> json) => AppUser(
-        id: (json['id'] as num?)?.toInt() ?? 0,
-        name: json['name'] as String? ?? '',
-        email: json['email'] as String? ?? '',
-        role: json['role'] as String? ?? '',
-        mobile: json['mobile'] as String?,
-        regions: (json['regions'] as List?)
-                ?.whereType<Map>()
-                .map((e) => Region.fromJson(e.cast<String, dynamic>()))
-                .toList() ??
-            const [],
-      );
+    id: (json['id'] as num?)?.toInt() ?? 0,
+    name: json['name'] as String? ?? '',
+    email: json['email'] as String? ?? '',
+    role: json['role'] as String? ?? '',
+    mobile: json['mobile'] as String?,
+    regions:
+        (json['regions'] as List?)
+            ?.whereType<Map>()
+            .map((e) => Region.fromJson(e.cast<String, dynamic>()))
+            .toList() ??
+        const [],
+  );
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'email': email,
-        'role': role,
-        'mobile': mobile,
-        'regions': regions.map((r) => r.toJson()).toList(),
-      };
+    'id': id,
+    'name': name,
+    'email': email,
+    'role': role,
+    'mobile': mobile,
+    'regions': regions.map((r) => r.toJson()).toList(),
+  };
 }
 
 class Region {
@@ -65,10 +75,10 @@ class Region {
   final String? code;
 
   factory Region.fromJson(Map<String, dynamic> json) => Region(
-        id: (json['id'] as num?)?.toInt() ?? 0,
-        name: json['name'] as String? ?? '',
-        code: json['code'] as String?,
-      );
+    id: (json['id'] as num?)?.toInt() ?? 0,
+    name: json['name'] as String? ?? '',
+    code: json['code'] as String?,
+  );
 
   Map<String, dynamic> toJson() => {'id': id, 'name': name, 'code': code};
 }

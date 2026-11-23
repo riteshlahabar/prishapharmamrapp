@@ -4,6 +4,7 @@ import 'package:material_ui/material_ui.dart';
 
 import '../../../core/app_theme.dart';
 import '../../../core/widgets/app_feedback.dart';
+import '../../../core/widgets/brand.dart';
 import '../domain/message.dart';
 import '../state/messages_controller.dart';
 
@@ -16,8 +17,9 @@ class InboxScreen extends ConsumerWidget {
     final unread = ref.watch(unreadCountProvider).value ?? 0;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Messages'),
+      appBar: BrandAppBar(
+        title: 'Messages',
+        subtitle: unread > 0 ? '$unread unread' : 'All caught up',
         actions: [
           if (unread > 0)
             TextButton(
@@ -80,7 +82,11 @@ class InboxScreen extends ConsumerWidget {
   /// Opening a message is what marks it read — the server is idempotent
   /// about it, so re-opening one costs nothing and a failed call is not
   /// worth interrupting the read for.
-  Future<void> _open(BuildContext context, WidgetRef ref, Message message) async {
+  Future<void> _open(
+    BuildContext context,
+    WidgetRef ref,
+    Message message,
+  ) async {
     await showModalBottomSheet<void>(
       context: context,
       showDragHandle: true,
@@ -121,9 +127,7 @@ class _MessageTile extends StatelessWidget {
                 width: 8,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: message.isRead
-                      ? Colors.transparent
-                      : AppTheme.primary,
+                  color: message.isRead ? Colors.transparent : AppTheme.primary,
                 ),
               ),
               const SizedBox(width: 10),
@@ -147,7 +151,9 @@ class _MessageTile extends StatelessWidget {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
-                          color: AppTheme.textSecondary, fontSize: 13),
+                        color: AppTheme.textSecondary,
+                        fontSize: 13,
+                      ),
                     ),
                     const SizedBox(height: 8),
                     Row(
@@ -162,16 +168,20 @@ class _MessageTile extends StatelessWidget {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
-                                color: AppTheme.textSecondary, fontSize: 11),
+                              color: AppTheme.textSecondary,
+                              fontSize: 11,
+                            ),
                           ),
                         ),
                         Text(
                           message.sentAt == null
                               ? ''
                               : DateFormat('d MMM, h:mm a')
-                                  .format(message.sentAt!.toLocal()),
+                                    .format(message.sentAt!.toLocal()),
                           style: const TextStyle(
-                              color: AppTheme.textSecondary, fontSize: 11),
+                            color: AppTheme.textSecondary,
+                            fontSize: 11,
+                          ),
                         ),
                       ],
                     ),
@@ -204,8 +214,7 @@ class _MessageSheet extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(message.subject,
-              style: Theme.of(context).textTheme.titleLarge),
+          Text(message.subject, style: Theme.of(context).textTheme.titleLarge),
           const SizedBox(height: 6),
           Text(
             [
@@ -214,8 +223,7 @@ class _MessageSheet extends StatelessWidget {
               if (message.sentAt != null)
                 DateFormat('d MMM y, h:mm a').format(message.sentAt!.toLocal()),
             ].join(' · '),
-            style: const TextStyle(
-                color: AppTheme.textSecondary, fontSize: 12),
+            style: const TextStyle(color: AppTheme.textSecondary, fontSize: 12),
           ),
           const Divider(height: 24),
           ConstrainedBox(
