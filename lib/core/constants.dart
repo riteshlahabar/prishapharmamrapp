@@ -38,6 +38,13 @@ class AppConstants {
   static const String visits = '/visits';
   static const String persons = '/persons';
 
+  /// The Add Client form's two pickers. `client-types` is the panel's own
+  /// master, so a kind added there is offered here with no release;
+  /// `assignees/telecallers` is every active telecaller, because assigning
+  /// a client crosses territories by design (docs/api/v1-mr.md).
+  static const String clientTypes = '/client-types';
+  static const String telecallers = '/assignees/telecallers';
+
   static const String messages = '/messages';
   static const String unreadCount = '/messages/unread-count';
   static const String readAll = '/messages/read-all';

@@ -5,7 +5,7 @@ import 'package:material_ui/material_ui.dart';
 import '../../../core/app_theme.dart';
 import '../../messages/state/messages_controller.dart';
 
-/// The bottom-nav frame the four main screens live in.
+/// The bottom-nav frame the five main screens live in.
 class AppShell extends ConsumerWidget {
   const AppShell({required this.navigationShell, super.key});
 
@@ -41,6 +41,11 @@ class AppShell extends ConsumerWidget {
               icon: Icon(Icons.map_outlined),
               selectedIcon: Icon(Icons.map),
               label: 'Visits',
+            ),
+            const NavigationDestination(
+              icon: Icon(Icons.people_outline),
+              selectedIcon: Icon(Icons.people),
+              label: 'Clients',
             ),
             NavigationDestination(
               icon: Badge.count(
