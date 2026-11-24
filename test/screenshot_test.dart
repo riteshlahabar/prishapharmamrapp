@@ -9,6 +9,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:mr_app/core/api/api_envelope.dart';
 import 'package:mr_app/core/app_theme.dart';
+import 'package:mr_app/core/state/providers.dart';
 import 'package:mr_app/features/attendance/domain/attendance.dart';
 import 'package:mr_app/features/attendance/state/attendance_controller.dart';
 import 'package:mr_app/features/attendance/ui/home_screen.dart';
@@ -234,6 +235,9 @@ void main() {
       'home_fresh',
       ProviderScope(
         overrides: [
+          // Hold the clock: the header prints the date, and a golden taken
+          // against the real one is stale by tomorrow.
+          todayProvider.overrideWithValue(DateTime(2026, 11, 23)),
           authControllerProvider.overrideWith(_Auth.new),
           unreadCountProvider.overrideWith(_Unread.new),
           attendanceControllerProvider.overrideWith(
@@ -252,6 +256,9 @@ void main() {
       'home_on_duty',
       ProviderScope(
         overrides: [
+          // Hold the clock: the header prints the date, and a golden taken
+          // against the real one is stale by tomorrow.
+          todayProvider.overrideWithValue(DateTime(2026, 11, 23)),
           authControllerProvider.overrideWith(_Auth.new),
           unreadCountProvider.overrideWith(_Unread.new),
           attendanceControllerProvider.overrideWith(

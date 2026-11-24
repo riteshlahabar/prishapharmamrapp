@@ -8,6 +8,8 @@ import '../../../core/state/providers.dart';
 import '../../../core/widgets/app_feedback.dart';
 import '../../persons/domain/person.dart';
 import '../../persons/state/persons_controller.dart';
+import '../../products/domain/product.dart';
+import '../../products/ui/product_lines_field.dart';
 import '../domain/visit_purpose.dart';
 import '../state/visits_controller.dart';
 
@@ -32,6 +34,7 @@ class _VisitFormScreenState extends ConsumerState<VisitFormScreen> {
   TimeOfDay? _inTime;
   TimeOfDay? _outTime;
   GeoFix? _fix;
+  List<ProductLineInput> _products = const [];
 
   bool _busy = false;
   bool _locating = false;
@@ -73,7 +76,7 @@ class _VisitFormScreenState extends ConsumerState<VisitFormScreen> {
   String? _format(TimeOfDay? time) => time == null
       ? null
       : '${time.hour.toString().padLeft(2, '0')}:'
-          '${time.minute.toString().padLeft(2, '0')}';
+            '${time.minute.toString().padLeft(2, '0')}';
 
   Future<void> _pickTime({required bool isIn}) async {
     final picked = await showTimePicker(
@@ -100,13 +103,16 @@ class _VisitFormScreenState extends ConsumerState<VisitFormScreen> {
     });
 
     try {
-      await ref.read(visitsRepositoryProvider).create(
+      await ref
+          .read(visitsRepositoryProvider)
+          .create(
             personId: _person!.id,
             purpose: _purpose!,
             inTime: _format(_inTime),
             outTime: _format(_outTime),
             notes: _notes.text,
             fix: _fix,
+            products: _products,
           );
 
       // The history behind this screen is now stale.
@@ -224,7 +230,14 @@ class _VisitFormScreenState extends ConsumerState<VisitFormScreen> {
                   errorText: _serverErrors['notes']?.first,
                 ),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 14),
+              // Below the notes, as on the telecaller's call sheet: the
+              // same field in both apps.
+              ProductLinesField(
+                subtitle: 'Optional — what you detailed, and how many boxes',
+                onChanged: (lines) => _products = lines,
+              ),
+              const SizedBox(height: 14),
               FilledButton(
                 onPressed: _busy ? null : _save,
                 child: _busy
@@ -232,7 +245,9 @@ class _VisitFormScreenState extends ConsumerState<VisitFormScreen> {
                         height: 20,
                         width: 20,
                         child: CircularProgressIndicator(
-                            strokeWidth: 2, color: Colors.white),
+                          strokeWidth: 2,
+                          color: Colors.white,
+                        ),
                       )
                     : const Text('Save visit'),
               ),
@@ -246,21 +261,25 @@ class _VisitFormScreenState extends ConsumerState<VisitFormScreen> {
   Widget _locationBanner() {
     final (icon, colour, text) = switch ((_locating, _fix, _locationNote)) {
       (true, _, _) => (
-          Icons.my_location,
-          AppTheme.textSecondary,
-          'Getting your location…'
-        ),
+        Icons.my_location,
+        AppTheme.textSecondary,
+        'Getting your location…',
+      ),
       (_, final GeoFix fix, _) => (
-          Icons.place,
-          AppTheme.success,
-          'Location captured (±${fix.accuracy?.round() ?? '?'} m)'
-        ),
-      (_, _, final String note) => (Icons.location_off_outlined, AppTheme.warning, note),
+        Icons.place,
+        AppTheme.success,
+        'Location captured (±${fix.accuracy?.round() ?? '?'} m)',
+      ),
+      (_, _, final String note) => (
+        Icons.location_off_outlined,
+        AppTheme.warning,
+        note,
+      ),
       _ => (
-          Icons.location_off_outlined,
-          AppTheme.warning,
-          'No location yet. The visit will be saved without one.'
-        ),
+        Icons.location_off_outlined,
+        AppTheme.warning,
+        'No location yet. The visit will be saved without one.',
+      ),
     };
 
     return Container(

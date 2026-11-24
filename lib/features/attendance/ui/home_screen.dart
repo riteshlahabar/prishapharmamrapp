@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../../core/app_theme.dart';
+import '../../../core/state/providers.dart';
 import '../../../core/widgets/app_feedback.dart';
 import '../../../core/widgets/brand.dart';
 import '../../auth/state/auth_controller.dart';
@@ -84,7 +85,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   const Icon(Icons.today, size: 15, color: AppTheme.teal),
                   const SizedBox(width: 6),
                   Text(
-                    DateFormat('EEEE, d MMMM').format(DateTime.now()),
+                    DateFormat('EEEE, d MMMM').format(ref.watch(todayProvider)),
                     style: const TextStyle(
                       color: AppTheme.tealDark,
                       fontSize: 12.5,

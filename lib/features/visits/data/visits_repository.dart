@@ -2,6 +2,7 @@ import '../../../core/api/api_client.dart';
 import '../../../core/api/api_envelope.dart';
 import '../../../core/constants.dart';
 import '../../../core/location/location_service.dart';
+import '../../products/domain/product.dart';
 import '../domain/visit.dart';
 import '../domain/visit_purpose.dart';
 
@@ -28,6 +29,7 @@ class VisitsRepository {
     String? outTime,
     String? notes,
     GeoFix? fix,
+    List<ProductLineInput> products = const [],
   }) async {
     final envelope = await _api.post(
       AppConstants.visits,
@@ -37,6 +39,10 @@ class VisitsRepository {
         'in_time': ?inTime,
         'out_time': ?outTime,
         if ((notes ?? '').isNotEmpty) 'notes': notes,
+        // Left out entirely when empty: the server reads an absent key as
+        // "no products", and sending [] would say the same thing louder.
+        if (products.isNotEmpty)
+          'products': [for (final line in products) line.toJson()],
         // Both coordinates or neither; the timestamp says when the device
         // read them, which the server keeps beside its own receive time.
         if (fix != null) ...{

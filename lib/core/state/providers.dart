@@ -4,6 +4,7 @@ import '../../features/attendance/data/attendance_repository.dart';
 import '../../features/auth/data/auth_repository.dart';
 import '../../features/messages/data/messages_repository.dart';
 import '../../features/persons/data/persons_repository.dart';
+import '../../features/products/data/products_repository.dart';
 import '../../features/visits/data/visits_repository.dart';
 import '../api/api_client.dart';
 import '../api/token_store.dart';
@@ -14,6 +15,12 @@ import '../location/location_service.dart';
 final tokenStoreProvider = Provider<TokenStore>(
   (ref) => throw UnimplementedError('overridden in main()'),
 );
+
+/// Today, for anything that prints a date. A provider rather than a bare
+/// `DateTime.now()` so a golden test can hold the clock still — the home
+/// header shows the date, and a golden taken against the real clock fails
+/// the next morning.
+final todayProvider = Provider<DateTime>((ref) => DateTime.now());
 
 /// False until the splash screen has had its moment. The router holds every
 /// route behind it, so the app opens on the logo instead of flashing the
@@ -74,6 +81,10 @@ final visitsRepositoryProvider = Provider<VisitsRepository>(
 
 final personsRepositoryProvider = Provider<PersonsRepository>(
   (ref) => PersonsRepository(ref.watch(apiClientProvider)),
+);
+
+final productsRepositoryProvider = Provider<ProductsRepository>(
+  (ref) => ProductsRepository(ref.watch(apiClientProvider)),
 );
 
 final messagesRepositoryProvider = Provider<MessagesRepository>(

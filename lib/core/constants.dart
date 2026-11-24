@@ -38,6 +38,9 @@ class AppConstants {
   static const String visits = '/visits';
   static const String persons = '/persons';
 
+  /// Shared with the telecaller app: both fill their product dropdown here.
+  static const String products = '/products';
+
   static const String messages = '/messages';
   static const String unreadCount = '/messages/unread-count';
   static const String readAll = '/messages/read-all';
