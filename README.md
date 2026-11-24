@@ -19,7 +19,7 @@ real device, pass your machine's LAN address or the deployed host.
 
 ```bash
 flutter analyze                                   # must be clean
-flutter test                                      # 40 checks
+flutter test                                      # 51 checks
 flutter test test/screenshot_test.dart --update-goldens   # re-render the PNGs
 ```
 
@@ -44,6 +44,15 @@ Each feature is `domain/` (models), `data/` (repository), `state/` (Riverpod),
   with a wrong clock. Times are never sent — the server stamps them.
 - **A token dies with its account.** `account_inactive` and `role_changed`
   clear the token and drop to login; a plain `forbidden` does not.
+- **A visit can carry a photo.** One picture of the shop, clinic or
+  hospital, camera first and gallery as a fallback, shrunk on the device to
+  1600px / q70. It goes up in the *same* multipart POST as the visit, so a
+  visit and its photo arrive together or not at all. The app never gets the
+  picture back — only `has_photo` — because the file is panel evidence
+  behind the visit's territory scope. Contract: `docs/visit-photos.md` in
+  the CRM repo. iOS needs the two `NS*UsageDescription` strings already in
+  `Info.plist`; Android needs no camera permission, since image_picker
+  hands the shutter to the phone's own camera app.
 - **Geo travels with its timestamp.** `location_fetched_at` says when the
   device read the GPS, which the server keeps beside its own receive time, so
   a visit filed late is visibly late.

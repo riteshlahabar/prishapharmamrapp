@@ -133,6 +133,10 @@ class _VisitTile extends StatelessWidget {
                       : DateFormat('d MMM y').format(visit.visitDate!),
                 ),
                 _Fact(icon: Icons.schedule, text: visit.timeLabel),
+                // Only when there is one: a "no photo" fact on every older
+                // visit would be noise, since none of them could have had one.
+                if (visit.hasPhoto)
+                  const _Fact(icon: Icons.photo_camera, text: 'Photo'),
               ],
             ),
             if ((visit.notes ?? '').isNotEmpty) ...[

@@ -42,6 +42,11 @@ dependencies:
   # coordinates the device reads.
   geolocator: ^14.1.2
 
+  # The shopfront photo on a visit. image_picker, not camera: it hands the
+  # shutter to the phone's own camera app, so there is no preview surface to
+  # build and no camera permission of our own to request on Android.
+  image_picker: ^1.2.4
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

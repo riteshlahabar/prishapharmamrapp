@@ -10,8 +10,10 @@ import '../../persons/domain/person.dart';
 import '../../persons/state/persons_controller.dart';
 import '../../products/domain/product.dart';
 import '../../products/ui/product_lines_field.dart';
+import '../domain/visit_photo.dart';
 import '../domain/visit_purpose.dart';
 import '../state/visits_controller.dart';
+import 'visit_photo_field.dart';
 
 /// Files one visit.
 ///
@@ -34,6 +36,7 @@ class _VisitFormScreenState extends ConsumerState<VisitFormScreen> {
   TimeOfDay? _inTime;
   TimeOfDay? _outTime;
   GeoFix? _fix;
+  VisitPhoto? _photo;
   List<ProductLineInput> _products = const [];
 
   bool _busy = false;
@@ -112,6 +115,7 @@ class _VisitFormScreenState extends ConsumerState<VisitFormScreen> {
             outTime: _format(_outTime),
             notes: _notes.text,
             fix: _fix,
+            photo: _photo,
             products: _products,
           );
 
@@ -229,6 +233,13 @@ class _VisitFormScreenState extends ConsumerState<VisitFormScreen> {
                   alignLabelWithHint: true,
                   errorText: _serverErrors['notes']?.first,
                 ),
+              ),
+              const SizedBox(height: 14),
+              // Above the products: the photo belongs with where the rep is
+              // standing, not with what they detailed.
+              VisitPhotoField(
+                error: _serverErrors['photo']?.first,
+                onChanged: (photo) => _photo = photo,
               ),
               const SizedBox(height: 14),
               // Below the notes, as on the telecaller's call sheet: the

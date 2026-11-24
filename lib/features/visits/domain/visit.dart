@@ -15,6 +15,7 @@ class Visit {
     this.personTypeLabel,
     this.latitude,
     this.longitude,
+    this.hasPhoto = false,
     this.recordedAt,
   });
 
@@ -30,6 +31,11 @@ class Visit {
   final String? personTypeLabel;
   final double? latitude;
   final double? longitude;
+
+  /// Whether a shopfront photo went up with it. The picture itself is not
+  /// served to the app: it is panel evidence, behind the visit's territory
+  /// scope, so the history shows a marker and not a thumbnail.
+  final bool hasPhoto;
 
   /// When the server received it, which is not when the visit happened —
   /// a late entry is visible as one.
@@ -62,6 +68,7 @@ class Visit {
       // decimal(10,7) arrives as a string, so parse rather than cast.
       latitude: _toDouble(json['latitude']),
       longitude: _toDouble(json['longitude']),
+      hasPhoto: json['has_photo'] == true,
       recordedAt: DateTime.tryParse(json['recorded_at'] as String? ?? ''),
     );
   }

@@ -6,6 +6,10 @@
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>NSCameraUsageDescription</key>
+	<string>The camera is used to photograph the shop, clinic or hospital you are visiting, so the office can see where the visit happened.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Your photos are read only when you choose an existing picture of the place you visited.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Your location is recorded with each check-in, check-out and visit, so your reports show where the work happened.</string>
 	<key>CFBundleDisplayName</key>
