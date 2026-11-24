@@ -35,7 +35,7 @@ class AppShell extends ConsumerWidget {
             const NavigationDestination(
               icon: Icon(Icons.home_outlined),
               selectedIcon: Icon(Icons.home),
-              label: 'Today',
+              label: 'Home',
             ),
             const NavigationDestination(
               icon: Icon(Icons.map_outlined),
